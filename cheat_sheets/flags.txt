@@ -1,0 +1,113 @@
+==============================
+     x86 FLAGS Register
+==============================
+
+Size: 16 bits (in real mode)
+Some bits are status (set automatically by CPU),
+others are control (set/cleared by instructions).
+
+----------------------------------------
+ Quick Reference
+----------------------------------------
+CF → Carry        (CLC/STC)
+PF → Parity       (set automatically)
+AF → Aux Carry    (BCD arithmetic)
+ZF → Zero         (result = 0)
+SF → Sign         (negative result)
+TF → Trap         (debug single-step)
+IF → Interrupt    (CLI/STI)
+DF → Direction    (CLD/STD)
+OF → Overflow     (signed overflow)
+
+
+==============================
+     x86 FLAGS Register
+==============================
+
+Size: 16 bits (in real mode)
+Some bits are status (set automatically by CPU),
+others are control (set/cleared by instructions).
+
+----------------------------------------
+ Layout (bit positions)
+----------------------------------------
+Bit   Name   Meaning
+----------------------------------------
+ 0    CF     Carry Flag
+ 1    --     (reserved)
+ 2    PF     Parity Flag
+ 3    --     (reserved)
+ 4    AF     Auxiliary Carry (BCD)
+ 5    --     (reserved)
+ 6    ZF     Zero Flag
+ 7    SF     Sign Flag
+ 8    TF     Trap Flag (single-step debug)
+ 9    IF     Interrupt Flag
+10    DF     Direction Flag
+11    OF     Overflow Flag
+12-15 --     (reserved in 8086 real mode)
+
+----------------------------------------
+ Flag Explanations (with 1/0 meaning)
+----------------------------------------
+
+CF = Carry Flag (bit 0)
+  1 → Carry or borrow occurred in arithmetic
+  0 → No carry/borrow
+
+PF = Parity Flag (bit 2)
+  1 → Result has even number of 1 bits (parity even)
+  0 → Result has odd number of 1 bits (parity odd)
+
+AF = Auxiliary Carry (bit 4)
+  1 → Carry/borrow out of bit 3 (BCD operations)
+  0 → No auxiliary carry
+
+ZF = Zero Flag (bit 6)
+  1 → Result of operation = 0
+  0 → Result ≠ 0
+
+SF = Sign Flag (bit 7)
+  1 → Result negative (MSB = 1)
+  0 → Result positive (MSB = 0)
+
+TF = Trap Flag (bit 8)
+  1 → Single-step mode enabled (INT 1 after each instr)
+  0 → Normal execution
+
+IF = Interrupt Flag (bit 9)
+  1 → Hardware maskable interrupts enabled
+  0 → Hardware maskable interrupts disabled
+
+DF = Direction Flag (bit 10)
+  1 → String ops decrement SI/DI (process backward)
+  0 → String ops increment SI/DI (process forward)
+
+OF = Overflow Flag (bit 11)
+  1 → Signed arithmetic overflow occurred
+  0 → No signed overflow
+
+----------------------------------------
+ Manipulating FLAGS
+----------------------------------------
+
+Direct Flag Instructions:
+  CLC / STC   → Clear/Set Carry
+  CLI / STI   → Clear/Set Interrupt
+  CLD / STD   → Clear/Set Direction
+
+Whole FLAGS:
+  PUSHF       → Push FLAGS to stack
+  POPF        → Pop stack to FLAGS
+
+Partial FLAGS:
+  LAHF        → Load AH = SF:ZF:0:AF:0:PF:1:CF
+  SAHF        → Store AH into flags (low byte only)
+
+Conditional Jumps:
+  JC/JNC      → Jump if CF=1 / CF=0
+  JZ/JNZ      → Jump if ZF=1 / ZF=0
+  JS/JNS      → Jump if SF=1 / SF=0
+  JO/JNO      → Jump if OF=1 / OF=0
+  JP/JNP      → Jump if PF=1 / PF=0
+

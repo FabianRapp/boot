@@ -1,0 +1,102 @@
+==============================
+   x86 Real Mode Registers
+==============================
+
+;----------------------------------------
+; General Purpose Registers (16-bit)
+;----------------------------------------
+
+;----------------------------------------
+; Quick Reference
+;----------------------------------------
+AX  → Accumulator (AH/AL)
+BX  → Base
+CX  → Counter
+DX  → Data
+SI  → Source index
+DI  → Dest index
+BP  → Base ptr (stack frame)
+SP  → Stack ptr
+CS  → Code segment
+DS  → Data segment
+SS  → Stack segment
+ES  → Extra segment
+IP  → Instruction pointer
+FLAGS → Status/control bits
+
+
+AX  = Accumulator
+      - Used for arithmetic, I/O, BIOS calls
+      - Split into AH (high 8-bit) and AL (low 8-bit)
+
+BX  = Base Register
+      - Often used as a pointer with [bx]
+      - Split into BH and BL
+
+CX  = Counter Register
+      - Loop counters (used by LOOP instruction)
+      - Shift/rotate counts
+      - Split into CH and CL
+
+DX  = Data Register
+      - Extended results for MUL/DIV (high word)
+      - I/O port addressing
+      - Split into DH and DL
+
+;----------------------------------------
+; Index & Pointer Registers
+;----------------------------------------
+
+SI  = Source Index
+      - Source pointer for string instructions
+      - Used as [ds:si]
+
+DI  = Destination Index
+      - Destination pointer for string instructions
+      - Used as [es:di]
+
+BP  = Base Pointer
+      - Stack frame base (used with [ss:bp+disp])
+
+SP  = Stack Pointer
+      - Current top of stack (used with SS)
+
+;----------------------------------------
+; Segment Registers
+;----------------------------------------
+
+CS  = Code Segment
+      - Base for instruction fetch (CS:IP)
+
+DS  = Data Segment
+      - Default base for most memory data access
+
+SS  = Stack Segment
+      - Base for stack (with SP and BP)
+
+ES  = Extra Segment
+      - Destination for string ops (movsb, stosb, etc.)
+
+;----------------------------------------
+; Instruction Pointer
+;----------------------------------------
+
+IP  = Instruction Pointer
+      - Offset of next instruction in CS
+      - Together: CS:IP = current execution address
+
+;----------------------------------------
+; FLAGS Register (bits)
+;----------------------------------------
+
+CF  = Carry Flag       (bit 0)
+PF  = Parity Flag      (bit 2)
+AF  = Adjust Flag      (bit 4, BCD arithmetic)
+ZF  = Zero Flag        (bit 6)
+SF  = Sign Flag        (bit 7)
+TF  = Trap Flag        (bit 8, single-step debug)
+IF  = Interrupt Flag   (bit 9, enables maskable IRQs)
+DF  = Direction Flag   (bit 10, string ops direction)
+OF  = Overflow Flag    (bit 11)
+
+

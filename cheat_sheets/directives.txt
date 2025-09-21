@@ -1,0 +1,70 @@
+==============================
+   x86 Real Mode Directives
+==============================
+
+;----------------------------------------
+; Data Definition
+;----------------------------------------
+
+db   ; Define Byte   (8-bit)
+     ; Places 1 byte in memory
+     ; Example: db 'A', 0x41, 255
+
+dw   ; Define Word   (16-bit)
+     ; Places 2 bytes in memory (little-endian)
+     ; Example: dw 0x1234   ; stored as 34h 12h
+
+dd   ; Define Doubleword (32-bit)
+     ; Places 4 bytes in memory
+     ; Example: dd 0x12345678 ; stored as 78h 56h 34h 12h
+
+dq   ; Define Quadword (64-bit)
+     ; Places 8 bytes in memory
+     ; Example: dq 0x1122334455667788
+
+times ; Repeat directive
+      ; Fills memory by repeating an expression
+      ; Example: times 510-($-$$) db 0
+      ;   → pads boot sector with zeros
+
+;----------------------------------------
+; Labels
+;----------------------------------------
+
+label:   ; Marks a memory address
+         ; Example:
+         ; start:
+         ;   mov ax, 0
+
+;----------------------------------------
+; Sections / Segments
+;----------------------------------------
+
+section .text   ; Code section
+section .data   ; Data section
+section .bss    ; Uninitialized data
+
+org <address>   ; Tell assembler the origin (load address)
+                ; Example: org 0x7C00
+                ;   → BIOS loads bootloader at 0x7C00
+
+;----------------------------------------
+; Equates / Constants
+;----------------------------------------
+
+equ   ; Define a constant (like #define in C)
+      ; Example: SECTOR_SIZE equ 512
+
+;----------------------------------------
+; Alignment
+;----------------------------------------
+
+align <value>   ; Aligns code/data to boundary
+                ; Example: align 16
+
+;----------------------------------------
+; Bootloader Signature
+;----------------------------------------
+
+; At the very end of the boot sector:
+dw 0xAA55  ; Boot signature (little-endian = 55h AAh)
